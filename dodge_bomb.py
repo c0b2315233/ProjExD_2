@@ -6,19 +6,21 @@ import time as t
 
 def check_round(obj_rct:pg.Rect) -> tuple[bool,bool]:
     """
+    概要
     こうかとん、爆弾rectの画面内外判定用の関数
     引数:こうかとんrect,又は,爆弾rect
     戻り値:横方向、縦方向判定結果(True:画面内/False:画面内)
     """
-    X,Y=True,True
-    if obj_rct.left < 0 or WIDTH < obj_rct.right:
+    X,Y=True,True       #当たり判定用の変数をTrueで初期化
+    if obj_rct.left < 0 or WIDTH < obj_rct.right:  #左右出ていた場合
         X=False
-    if obj_rct.top < 0 or HEIGHT < obj_rct.bottom:
+    if obj_rct.top < 0 or HEIGHT < obj_rct.bottom: #上下で出ていた場合
         Y=False
     return X,Y
 
 def rot_kk(kk_rot:tuple):
     """
+    概要
     こうかとんの回転用関数
     引数:押されたボタンのタプル
     戻り値:角度の変数
@@ -28,6 +30,7 @@ def rot_kk(kk_rot:tuple):
 
 def bomb_size(g_time:int):
     """
+    概要
     爆弾を大きくする関数
     引数:ゲームの進行時間
     返り値:リストのタプル
@@ -36,6 +39,7 @@ def bomb_size(g_time:int):
 
 def Bomb_follow(now_bomb,now_kk:pg.rect):
     """
+    概要
     爆弾の追従をさせる関数
     引数:こうかとんの位置と爆弾の位置
     返り値:ベクトルのタプル
@@ -44,6 +48,7 @@ def Bomb_follow(now_bomb,now_kk:pg.rect):
 
 def GameOver(screen:pg.rect):
     """
+    概要
     ゲームオーバー関数
     ゲームオーバーの画面を表示する
     引数:画面のオブジェクト
@@ -86,7 +91,7 @@ def main():
     pg.draw.circle(bomb_img,(255,0,0),(50,50),10)
     bomb_rct=bomb_img.get_rect()
     bomb_rct.center=ra.randint(0,WIDTH),ra.randint(0,HEIGHT)
-    bomb_vx=5
+    bomb_vx=5                                       #爆弾の移動の切片
     bomb_vy=5
 
 
