@@ -3,6 +3,19 @@ import sys
 import pygame as pg
 import random as ra
 
+def check_round(obj_rct:pg.Rect) -> tuple[bool,bool]:
+    """
+    こうかとん、爆弾rectの画面内外判定用の関数
+    引数:こうかとんrect,又は,爆弾rect
+    戻り値:横方向、縦方向判定結果(True:画面内/False:画面内)
+    """
+    X,Y=True,True
+    if obj_rct.left < 0 or WIDTH < obj_rct.right:
+        X=False
+    if obj_rct.top < 0 or HEIGHT < obj_rct.bottom:
+        Y=False
+    return X,Y
+
 
 WIDTH, HEIGHT = 1600, 900
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -43,8 +56,17 @@ def main():
             if key_lst[k]:
                 sum_mv[0] += v[0]
                 sum_mv[1] += v[1]
+
         kk_rct.move_ip(sum_mv)
 
+        if check_round(kk_rct) != (True,True):
+            kk_rct.move_ip(-sum_mv[0] , -sum_mv[1])
+
+        fgx,fgy=check_round(bomb_rct)
+        if not fgx:
+            bomb_vx *= -1
+        if not fgy:
+            bomb_vy *= -1
         bomb_rct.move_ip(bomb_vx,bomb_vy)
 
         screen.blit(kk_img, kk_rct)
