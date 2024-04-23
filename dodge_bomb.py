@@ -1,6 +1,7 @@
 import os
 import sys
 import pygame as pg
+import random as ra
 
 
 WIDTH, HEIGHT = 1600, 900
@@ -20,13 +21,22 @@ def main():
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
     clock = pg.time.Clock()
+
+    bomb_img=pg.Surface((100,100))
+    bomb_img.set_colorkey((0,0,0))
+    pg.draw.circle(bomb_img,(255,0,0),(50,50),10)
+    bomb_rct=bomb_img.get_rect()
+    bomb_rct.center=ra.randint(0,WIDTH),ra.randint(0,HEIGHT)
+    bomb_vx=5
+    bomb_vy=5
+
+
     tmr = 0
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
         screen.blit(bg_img, [0, 0]) 
-
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
         for k,v in key_mv.items():
@@ -34,8 +44,11 @@ def main():
                 sum_mv[0] += v[0]
                 sum_mv[1] += v[1]
         kk_rct.move_ip(sum_mv)
-        
+
+        bomb_rct.move_ip(bomb_vx,bomb_vy)
+
         screen.blit(kk_img, kk_rct)
+        screen.blit(bomb_img, bomb_rct)
         pg.display.update()
         tmr += 1
         clock.tick(50)
